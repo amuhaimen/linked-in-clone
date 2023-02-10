@@ -1,13 +1,71 @@
-body {
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.heading {
+  text-align: center;
+  margin-top: 42px;
+  font-family: "Nunito", sans-serif;
+  font-size: 34px;
+  font-weight: 700;
+}
+.one {
+  width: 46px;
+  height: 46px;
+  color: #0077b5;
+}
+.regsubheading {
+  text-align: center;
+  margin-top: 12px;
+  font-family: "Nunito", sans-serif;
+  font-size: 20.64px;
+  font-weight: 400;
+  color: #11175d;
+}
+
+.reginput {
+  width: 100%;
+  margin-top: 42px !important;
+  font-family: "Nunito", sans-serif;
+  font-size: 13.76px !important;
+  font-weight: 500 !important;
+}
+
+.reglink {
+  text-align: center;
+  width: 100%;
+  margin-top: 30px;
+  font-size: 13.34px;
+  font-family: "Nunito", sans-serif;
+  font-size: 13.34px;
+}
+.reglink a {
+  color: #ea6c00;
+  font-weight: 700;
+  text-decoration: none;
+}
+.inputboxcontainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 35px;
+}
+
+.container {
+  margin: 0 auto;
+  width: 500px;
+  margin-top: 140px;
+}
+
+.logoicon {
+  text-align: center;
+}
+
+.error {
+  margin-top: 20px;
+}
+.eyeicon {
+  position: absolute;
+  right: 10px;
+  bottom: 20px;
 }
