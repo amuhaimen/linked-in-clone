@@ -41,8 +41,12 @@ const Login = () => {
   };
 
   let handleClick = () => {
+    let expression =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (formData.email == "") {
       setError({ ...error, email: "Email Required" });
+    } else if (!expression.test(formData.email)) {
+      setError({ ...error, email: "valid email required" });
     } else if (formData.password == "") {
       setError({ ...error, password: "password required" });
     }
