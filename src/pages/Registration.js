@@ -14,6 +14,9 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
 } from "firebase/auth";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const CommonButton = styled(Button)({
   backgroundColor: "#086FA4",
@@ -29,8 +32,10 @@ const CommonButton = styled(Button)({
 });
 
 const Registration = () => {
+  let navigate = useNavigate();
   const auth = getAuth();
   let [show, setShow] = useState(false);
+  let [loader, setLoader] = useState(false);
   let [formData, setFormData] = useState({
     email: "",
     name: "",
@@ -72,21 +77,30 @@ const Registration = () => {
   };
 
   let handleClick = () => {
+    setLoader(true);
     let expression =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (formData.email == "") {
+      setLoader(false);
       setError({ ...error, email: "Email Required" });
     } else if (!expression.test(formData.email)) {
+      setLoader(false);
       setError({ ...error, email: "valid email required" });
     } else if (formData.name == "") {
+      setLoader(false);
       setError({ ...error, name: "Full Name Required" });
     } else if (formData.password == "") {
+      setLoader(false);
       setError({ ...error, password: "password Required" });
     } else {
       createUserWithEmailAndPassword(auth, formData.email, formData.password)
         .then(() => {
           sendEmailVerification(auth.currentUser).then(() => {
-            console.log("email sent");
+            toast("registration successfull,please check your email");
+            setTimeout(() => {
+              setLoader(false);
+              navigate("/login");
+            }, 2000);
           });
         })
         .catch((e) => {
@@ -99,77 +113,99 @@ const Registration = () => {
   };
 
   return (
-    <div className="container">
-      <div className="logoicon">
-        <BsLinkedin className="one" />
-      </div>
-      <Header>
-        <Heading
-          className="heading"
-          title="Get started with easily register"
-          as="h2"
-        />
-        <p className="regsubheading">Free register and you can enjoy it</p>
-      </Header>
-      <div className="inputboxcontainer">
-        <InputBox
-          textChange={handleForm}
-          name="email"
-          type="text"
-          label="Email"
-          variant="outlined"
-          className="reginput"
-        />
-        {error.email && (
-          <Alert className="error" variant="filled" severity="error">
-            {error.email}
-          </Alert>
-        )}
-        <InputBox
-          textChange={handleForm}
-          name="name"
-          type="text"
-          label="Full Name"
-          variant="outlined"
-          className="reginput"
-        />
-        {error.name && (
-          <Alert className="error" variant="filled" severity="error">
-            {error.name}
-          </Alert>
-        )}
-        <div style={{ position: "relative" }}>
+    <>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+      <div className="container">
+        <div className="logoicon">
+          <BsLinkedin className="one" />
+        </div>
+        <Header>
+          <Heading
+            className="heading"
+            title="Get started with easily register"
+            as="h2"
+          />
+          <p className="regsubheading">Free register and you can enjoy it</p>
+        </Header>
+        <div className="inputboxcontainer">
           <InputBox
             textChange={handleForm}
-            name="password"
-            type={show ? "text" : "password"}
-            label="Password"
+            name="email"
+            type="text"
+            label="Email"
             variant="outlined"
             className="reginput"
           />
-          {show ? (
-            <AiFillEye className="eyeicon" onClick={() => setShow(false)} />
-          ) : (
-            <AiFillEyeInvisible
-              className="eyeicon"
-              onClick={() => setShow(true)}
-            />
+          {error.email && (
+            <Alert className="error" variant="filled" severity="error">
+              {error.email}
+            </Alert>
           )}
+          <InputBox
+            textChange={handleForm}
+            name="name"
+            type="text"
+            label="Full Name"
+            variant="outlined"
+            className="reginput"
+          />
+          {error.name && (
+            <Alert className="error" variant="filled" severity="error">
+              {error.name}
+            </Alert>
+          )}
+          <div style={{ position: "relative" }}>
+            <InputBox
+              textChange={handleForm}
+              name="password"
+              type={show ? "text" : "password"}
+              label="Password"
+              variant="outlined"
+              className="reginput"
+            />
+            {show ? (
+              <AiFillEye className="eyeicon" onClick={() => setShow(false)} />
+            ) : (
+              <AiFillEyeInvisible
+                className="eyeicon"
+                onClick={() => setShow(true)}
+              />
+            )}
+          </div>
+          {error.password && (
+            <Alert className="error" variant="filled" severity="error">
+              {error.password}
+            </Alert>
+          )}
+          {loader ? (
+            <LButton
+              className="lbuttonloading"
+              lname={CommonButton}
+              title="loading..."
+            />
+          ) : (
+            <LButton click={handleClick} lname={CommonButton} title="Sign Up" />
+          )}
+          <AuthenticationLink
+            className="reglink"
+            title="Already have an account"
+            href="/login"
+            hreftitle="Sign in"
+          />
         </div>
-        {error.password && (
-          <Alert className="error" variant="filled" severity="error">
-            {error.password}
-          </Alert>
-        )}
-        <LButton click={handleClick} lname={CommonButton} title="Sign Up" />
-        <AuthenticationLink
-          className="reglink"
-          title="Already have an account"
-          href="/login"
-          hreftitle="Sign in"
-        />
       </div>
-    </div>
+    </>
   );
 };
 

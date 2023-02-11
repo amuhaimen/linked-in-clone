@@ -69,3 +69,7 @@
   right: 10px;
   bottom: 20px;
 }
+
+.lbuttonloading {
+  background: rgb(59, 70, 78) !important;
+}
