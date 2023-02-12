@@ -13,6 +13,8 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useDispatch } from "react-redux";
+import { activeUser } from "../slices/userSlice";
 
 const CommonButton = styled(Button)({
   backgroundColor: "#086FA4",
@@ -28,6 +30,7 @@ const CommonButton = styled(Button)({
 });
 
 const Login = () => {
+  let dispatch = useDispatch();
   const auth = getAuth();
   let navigate = useNavigate();
   let [show, setShow] = useState(false);
@@ -63,6 +66,8 @@ const Login = () => {
     } else {
       signInWithEmailAndPassword(auth, formData.email, formData.password)
         .then((userCredential) => {
+          dispatch(activeUser(userCredential));
+          localStorage.setItem("userInfo", JSON.stringify(userCredential));
           if (userCredential.user.emailVerified) {
             toast("succesessfully log in");
             setTimeout(() => {

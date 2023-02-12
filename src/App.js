@@ -12,11 +12,11 @@ import Home from "./pages/Home";
 
 let router = createBrowserRouter(
   createRoutesFromElements(
-    <>
+    <Route>
       <Route path="/" element={<Registration />} />
       <Route path="/login" element={<Login />} />
       <Route path="/home" element={<Home />} />
-    </>
+    </Route>
   )
 );
 function App() {
