@@ -73,3 +73,97 @@
 .lbuttonloading {
   background: rgb(59, 70, 78) !important;
 }
+/* ==============NewsFeed Start================================================== */
+/* =============================================================================== */
+.topbar {
+  background: #fff;
+  height: 80px;
+}
+
+.newsfeed-container {
+  width: 1200px;
+  margin: 0 auto;
+}
+
+.title {
+  font-family: "Barlow", sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  border-bottom: 1px solid #000000;
+}
+
+.postbox {
+  background: #fff;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  height: 135px;
+  padding: 0 30px;
+  position: relative;
+  margin-top: 20px;
+}
+
+.newsfeedInput {
+  width: 100%;
+  height: 67px !important;
+}
+
+.iconholder {
+  display: flex;
+  column-gap: 20px;
+  position: absolute;
+  bottom: 45px;
+  right: 30px;
+}
+
+.send-icon {
+  font-size: 24px;
+  color: #fff;
+  background: #0077b5;
+  padding: 3px;
+  cursor: pointer;
+}
+
+.send-icon:hover {
+  background: #01324d;
+}
+
+.pic-icon {
+  font-size: 24px;
+  color: #000000;
+  padding: 3px;
+  cursor: pointer;
+}
+
+.post-title {
+  display: flex;
+}
+
+.post {
+  padding: 0 30px;
+}
+
+.postp {
+  padding: 0 50px;
+}
+
+.card-topper {
+  align-items: center;
+  display: flex;
+  margin-bottom: 20px;
+  column-gap: 20px;
+}
+
+.posterimg {
+  height: 52px;
+  width: 52px;
+  border-radius: 50%;
+}
+
+.posterimg img {
+  width: 100%;
+}
+
+.bg-color {
+  background: #e5e5e5;
+}
