@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -14,13 +14,42 @@ import InputBox from "../components/InputBox";
 
 import { AiOutlinePicture } from "react-icons/ai";
 import { TbSend } from "react-icons/tb";
+import { getDatabase, ref, set, push, onValue } from "firebase/database";
 
 const Home = () => {
+  let [text, setText] = useState("");
+  let [status, setStatus] = useState([]);
+  const db = getDatabase();
   const auth = getAuth();
   let dispatch = useDispatch();
   let navigate = useNavigate();
   let data = useSelector((state) => state);
   console.log(data.userdata.userInfo);
+
+  //upload post start
+  let handleSubmit = () => {
+    set(push(ref(db, "status")), {
+      post: text,
+    }).then(() => {
+      setText("");
+    });
+  };
+
+  let handletext = (e) => {
+    setText(e.target.value);
+  };
+
+  useEffect(() => {
+    const todoRef = ref(db, "status");
+    onValue(todoRef, (snapshot) => {
+      let arr = [];
+      snapshot.forEach((item) => {
+        arr.push({ ...item.val(), id: item.key });
+      });
+      setStatus(arr);
+    });
+  }, []);
+  //upload post end
 
   useEffect(() => {
     if (!data.userdata.userInfo) {
@@ -35,6 +64,10 @@ const Home = () => {
     });
   };
 
+  let handleprofile = () => {
+    navigate("/profile");
+  };
+
   return (
     <>
       <div className="topbar"></div>
@@ -43,38 +76,45 @@ const Home = () => {
           <Grid container spacing={2}>
             <Grid item xs={9}>
               <div className="postbox">
-                <h3 className="title">New Post</h3>
-                <InputBox
-                  className="newsfeedInput"
-                  variant="standard"
-                  label="What's on your mind"
-                />
+                <div>
+                  <h3 className="title">New post</h3>
+                  <input
+                    onChange={handletext}
+                    className="newsfeed-input"
+                    placeholder="What's on your mind"
+                  />
+                </div>
                 <div className="iconholder">
                   <AiOutlinePicture className="pic-icon" />
-                  <TbSend className="send-icon" />
+                  <TbSend onClick={handleSubmit} className="send-icon" />
                 </div>
               </div>
               <div className="post">
-                <MUICard
-                  posterimgsrc="./assets/profilepic.png"
-                  postimgsrc="./assets/cardimg.jpg"
-                  postername="S.M Muhaimen"
-                  postertitle="@smmuhaimen"
-                  posttitle="Food"
-                  postdescription="is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially"
-                />
-                <MUICard
-                  posterimgsrc="./assets/profilepic.png"
-                  postimgsrc="./assets/htmlpic.png"
-                  postername="S.M Muhaimen"
-                  postertitle="@smmuhaimen"
-                  posttitle="HTML"
-                  postdescription="is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially"
-                />
+                {status.map((item) => (
+                  <MUICard
+                    posterimgsrc="./assets/profilepic.png"
+                    postimgsrc="./assets/cardimg.jpg"
+                    postername="S.M Muhaimen"
+                    postertitle="@smmuhaimen"
+                    posttitle="Food"
+                    postdescription={item.post}
+                  />
+                ))}
               </div>
             </Grid>
             <Grid item xs={3}>
-              <h1>Profile Link</h1>
+              <div onClick={handleprofile} className="profile-link">
+                <div className="show-cover-pic">
+                  <img src="./assets/cover-pic-1.png" />
+                </div>
+                <div className="show-profile-pic"></div>
+                <div className="info">
+                  <h4>Dmitry Kargaev</h4>
+                  <p>
+                    a;otujseorituseiorfgtuskdfjgkl xzddfjgklxzjdgklxdfjgikxdhi
+                  </p>
+                </div>
+              </div>
             </Grid>
             <button onClick={handleLogout}>Logout</button>
           </Grid>

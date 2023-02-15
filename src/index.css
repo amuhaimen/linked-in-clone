@@ -78,41 +78,51 @@
 .topbar {
   background: #fff;
   height: 80px;
+  width: 100%;
 }
 
 .newsfeed-container {
   width: 1200px;
   margin: 0 auto;
+  background: #f7f9fb;
 }
+
+.postbox {
+  height: 135px;
+  width: 850px;
+  background: #ffffff;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* .title {
+  font-family: "Barlow", sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  border-bottom: 1px solid #000000;
+} */
 
 .title {
   font-family: "Barlow", sans-serif;
   font-weight: 500;
   font-size: 12px;
   border-bottom: 1px solid #000000;
+  padding: 10px;
 }
-
-.postbox {
-  background: #fff;
-  display: flex;
-  justify-content: space-around;
-  flex-direction: column;
-  height: 135px;
-  padding: 0 30px;
-  position: relative;
-  margin-top: 20px;
+.newsfeed-input {
+  width: 820px;
+  height: 70px;
+  margin: 12.5px;
+  border: 0;
 }
-
-.newsfeedInput {
-  width: 100%;
-  height: 67px !important;
+.newsfeed-input::placeholder {
+  font-size: 30px;
 }
-
 .iconholder {
   display: flex;
   column-gap: 20px;
   position: absolute;
-  bottom: 45px;
+  bottom: 40px;
   right: 30px;
 }
 
@@ -166,4 +176,36 @@
 
 .bg-color {
   background: #e5e5e5;
+}
+
+.profile-link {
+  height: 280px;
+  width: 290px;
+  background: #fff;
+  position: relative;
+  cursor: pointer;
+}
+
+.show-cover-pic {
+  width: 290px;
+  height: 120px;
+  background: #0077b5;
+  margin: 0 auto;
+}
+
+.show-profile-pic {
+  width: 100px;
+  height: 100px;
+  border: 5px solid #fff;
+  background: #ea6c00;
+  border-radius: 50%;
+  position: absolute;
+  top: 65px;
+  left: 95px;
+}
+
+.info {
+  text-align: center;
+  position: absolute;
+  top: 180px;
 }

@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
+import Profile from "./pages/Profile";
 
 let router = createBrowserRouter(
   createRoutesFromElements(
@@ -16,6 +17,7 @@ let router = createBrowserRouter(
       <Route path="/" element={<Registration />} />
       <Route path="/login" element={<Login />} />
       <Route path="/home" element={<Home />} />
+      <Route path="profile" element={<Profile />} />
     </Route>
   )
 );
